@@ -5,6 +5,9 @@ pipeline {
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
+    options {
+        timeout(time: 30, unit: 'MINUTES') // Increase timeout if necessary
+    }
     stages {
         stage('Build') {
             steps {
