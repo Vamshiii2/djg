@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dir('C:/ProgramData/Jenkins/.jenkins/workspace/jdg/') {
-                    docker.run('node:14', '-v /var/run/docker.sock:/var/run/docker.sock')
+                script {
+                    docker.run(image: 'node:14', volumes: ['/var/run/docker.sock:/var/run/docker.sock'])
                 }
             }
         }
