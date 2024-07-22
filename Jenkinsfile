@@ -1,27 +1,29 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'node:14'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     stages {
         stage('Build') {
             steps {
                 script {
-                    dockerImage = docker.build("node-app")
+                    sh 'npm install'
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    dockerImage.inside {
-                        sh 'npm test'
-                    }
+                    sh 'npm test'
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    dockerImage.push('vamshi0007gangamma/node-app')
+                    sh 'echo "Deploying to production"'
                 }
             }
         }
